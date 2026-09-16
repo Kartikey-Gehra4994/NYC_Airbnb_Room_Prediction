@@ -2,3 +2,4 @@ model_pipeline.pkl
 nyc_room_type/
 __pycache__/
 *.pyc
+dockerfile
