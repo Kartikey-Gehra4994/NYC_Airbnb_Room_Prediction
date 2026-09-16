@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NYC Room Type AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+<header class="navbar">
+
+    <div class="brand">
+        <div class="brand-logo">NYC</div>
+
+        <div>
+            <h1>RoomType AI</h1>
+            <p>NYC Airbnb Classification</p>
+        </div>
+    </div>
+
+    <div class="api-status">
+        <span class="status-dot"></span>
+        <span id="apiStatus">API Ready</span>
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <span class="eyebrow">
+                MACHINE LEARNING • FASTAPI
+            </span>
+
+            <h2>
+                Predict the
+                <span>room type</span>
+                of an NYC Airbnb.
+            </h2>
+
+            <p>
+                Enter listing information and let the machine learning
+                model classify the most likely Airbnb room type.
+            </p>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="grid-pattern"></div>
+
+            <div class="location-circle">
+                <span>⌖</span>
+            </div>
+
+            <div class="hero-info">
+                <strong>10</strong>
+                <small>Input Features</small>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN AREA -->
+
+    <section class="workspace">
+
+
+        <!-- INPUT CARD -->
+
+        <div class="card input-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="section-label">LISTING DETAILS</span>
+                    <h3>Property Information</h3>
+                </div>
+
+                <button id="demoBtn" class="demo-btn">
+                    Load Demo
+                </button>
+
+            </div>
+
+
+            <form id="predictionForm">
+
+                <div class="form-grid">
+
+                    <label>
+                        <span>Latitude</span>
+                        <input
+                            type="number"
+                            id="latitude"
+                            step="any"
+                            min="-90"
+                            max="90"
+                            placeholder="40.7128"
+                            required
+                        >
+                        <small>-90 to 90</small>
+                    </label>
+
+
+                    <label>
+                        <span>Longitude</span>
+                        <input
+                            type="number"
+                            id="longitude"
+                            step="any"
+                            min="-180"
+                            max="180"
+                            placeholder="-74.0060"
+                            required
+                        >
+                        <small>-180 to 180</small>
+                    </label>
+
+
+                    <label>
+                        <span>Price</span>
+
+                        <div class="currency-input">
+                            <span>$</span>
+
+                            <input
+                                type="number"
+                                id="price"
+                                step="any"
+                                min="0.01"
+                                placeholder="150"
+                                required
+                            >
+                        </div>
+
+                        <small>Must be greater than 0</small>
+                    </label>
+
+
+                    <label>
+                        <span>Minimum Nights</span>
+
+                        <input
+                            type="number"
+                            id="minimum_nights"
+                            min="1"
+                            max="365"
+                            placeholder="2"
+                            required
+                        >
+
+                        <small>1 to 365</small>
+                    </label>
+
+
+                    <label>
+                        <span>Number of Reviews</span>
+
+                        <input
+                            type="number"
+                            id="number_of_reviews"
+                            min="0"
+                            placeholder="45"
+                            required
+                        >
+
+                        <small>0 or more</small>
+                    </label>
+
+
+                    <label>
+                        <span>Reviews per Month</span>
+
+                        <input
+                            type="number"
+                            id="reviews_per_month"
+                            step="any"
+                            min="0"
+                            placeholder="1.8"
+                            required
+                        >
+
+                        <small>0 or more</small>
+                    </label>
+
+
+                    <label>
+                        <span>Host Listings Count</span>
+
+                        <input
+                            type="number"
+                            id="calculated_host_listings_count"
+                            min="0"
+                            placeholder="3"
+                            required
+                        >
+
+                        <small>0 or more</small>
+                    </label>
+
+
+                    <label>
+                        <span>Availability</span>
+
+                        <input
+                            type="number"
+                            id="availability_365"
+                            min="0"
+                            max="365"
+                            placeholder="180"
+                            required
+                        >
+
+                        <small>0 to 365 days</small>
+                    </label>
+
+
+                    <label>
+                        <span>Neighbourhood Group</span>
+
+                        <select id="neighbourhood_group" required>
+
+                            <option value="">
+                                Select borough
+                            </option>
+
+                            <option>Bronx</option>
+                            <option>Brooklyn</option>
+                            <option>Manhattan</option>
+                            <option>Queens</option>
+                            <option>Staten Island</option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label>
+                        <span>Neighbourhood</span>
+
+                        <input
+                            type="text"
+                            id="neighbourhood"
+                            placeholder="Harlem"
+                            required
+                        >
+
+                        <small>NYC neighbourhood</small>
+                    </label>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="predictBtn"
+                    class="predict-btn"
+                >
+
+                    <span class="button-text">
+                        Predict Room Type
+                    </span>
+
+                    <span class="loader"></span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <div
+                id="errorBox"
+                class="error-box"
+            ></div>
+
+        </div>
+
+
+
+        <!-- PREDICTION CARD -->
+
+        <div class="card prediction-card">
+
+            <div class="prediction-header">
+
+                <div>
+                    <span class="section-label">
+                        MODEL OUTPUT
+                    </span>
+
+                    <h3>Prediction Result</h3>
+                </div>
+
+                <div class="ai-badge">
+                    AI
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyState"
+                class="empty-state"
+            >
+
+                <div class="prediction-icon">
+                    <span>✦</span>
+                </div>
+
+                <h4>
+                    Ready to predict
+                </h4>
+
+                <p>
+                    Submit the listing information and
+                    your model prediction will appear here.
+                </p>
+
+            </div>
+
+
+
+            <!-- RESULT -->
+
+            <div
+                id="resultState"
+                class="result-state hidden"
+            >
+
+                <div class="result-top">
+
+                    <div>
+
+                        <span class="result-label">
+                            PREDICTED ROOM TYPE
+                        </span>
+
+                        <h2 id="prediction">
+                            Private Room
+                        </h2>
+
+                    </div>
+
+                    <div class="prediction-check">
+                        ✓
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIDENCE -->
+
+                <div class="confidence-card">
+
+                    <div class="confidence-heading">
+
+                        <div>
+                            <span>Prediction Confidence</span>
+                            <small>Model certainty</small>
+                        </div>
+
+                        <strong id="confidence">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confidence-bar">
+
+                        <div
+                            id="confidenceBar"
+                            class="confidence-fill"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="confidence-status">
+
+                        <span
+                            id="confidenceBadge"
+                            class="confidence-badge"
+                        >
+                            Analyzing
+                        </span>
+
+                        <span id="confidenceText">
+                            Waiting for model output
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PROBABILITY -->
+
+                <div class="probability-section">
+
+                    <div class="probability-heading">
+
+                        <span>
+                            CLASS PROBABILITIES
+                        </span>
+
+                        <small>
+                            Model distribution
+                        </small>
+
+                    </div>
+
+
+                    <div
+                        id="probabilities"
+                        class="probabilities"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- RESULT SUMMARY -->
+
+                <div class="result-summary">
+
+                    <div class="summary-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Prediction generated successfully
+                        </strong>
+
+                        <p>
+                            The model processed all 10 input features.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="prediction-footer">
+
+                <span>
+                    Model Pipeline
+                </span>
+
+                <strong>
+                    FastAPI + Scikit-learn
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TECH INFO -->
+
+    <section class="tech-strip">
+
+        <div>
+            <span>MODEL</span>
+            <strong>Classification Pipeline</strong>
+        </div>
+
+        <div>
+            <span>API</span>
+            <strong>POST /predict</strong>
+        </div>
+
+        <div>
+            <span>VALIDATION</span>
+            <strong>Pydantic</strong>
+        </div>
+
+        <div>
+            <span>DATASET</span>
+            <strong>NYC Airbnb</strong>
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    NYC RoomType AI • Machine Learning Prediction App
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
