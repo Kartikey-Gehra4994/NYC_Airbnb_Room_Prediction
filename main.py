@@ -26,7 +26,7 @@ COLUMNS = [ "latitude",
             "neighbourhood_group",
             "neighbourhood" ]
 
-model = joblib.load("model_pipeline.pkl")
+model = joblib.load("2_model_pipeline.pkl")
 
 # Pydantic Model = the input validation
 class Features(BaseModel):
