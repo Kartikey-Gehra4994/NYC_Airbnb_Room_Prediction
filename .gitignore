@@ -1,4 +1,5 @@
 model_pipeline.pkl
+download_model.py
 nyc_room_type/
 __pycache__/
 *.pyc
