@@ -4,6 +4,8 @@ A Machine Learning project that predicts the **room type of an Airbnb listing in
 
 The model is deployed using **FastAPI** and can be used through a simple web interface.
 
+Live Link : https://nyc-airbnb-room-prediction-1-hsxi.onrender.com/
+
 ---
 
 ## 📌 Project Overview
